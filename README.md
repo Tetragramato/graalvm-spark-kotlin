@@ -1,6 +1,6 @@
-##Graalvm-spark-kotlin
+#Graalvm-spark-kotlin
 
-###Description
+##Description
 
 Simple "Hello World" POC with :
 
@@ -9,7 +9,7 @@ Simple "Hello World" POC with :
 - Gradle with Kotlin-dsl
 - Docker with GraalVM (https://hub.docker.com/r/oracle/graalvm-ce/) for generating native-image
 
-###How
+##How
 
 Just run :
 
@@ -36,6 +36,6 @@ http://localhost:4567/hello
 
 Et voilà !!! You run a GraalVM native-image, with a simple service responding "Hello World".
 
-###TODO
+##TODO
 
 The native-image is running in the same Docker container than GraalVM -> Need to run the native-image on another "clean" Docker Container.
