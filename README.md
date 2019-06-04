@@ -1,5 +1,7 @@
 # Graalvm-spark-kotlin
 
+NOTE : This project actually generate a "fallback" native image, not a "true" native image.
+
 ## Description
 
 Simple "Hello World" POC with :

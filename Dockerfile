@@ -5,9 +5,26 @@ ARG NAME_APP
 
 COPY $NAME_APP /app/application.jar
 RUN ["chmod", "+x", "/app/application.jar"]
-RUN native-image -jar /app/application.jar
-ENTRYPOINT ["/application"]
+###############
+#CMD ["java", "-jar", "/app/application.jar", "-agentlib:native-image-agent=config-output-dir=/native-config/"]
+###############
 
+###############
+#-J-Xmx3G -J-Xms3G \
+#--initialize-at-build-time=org.eclipse.jetty.util.thread.TryExecutor \
+#--no-fallback \
+#--static \
+##############
+
+##############
+RUN native-image --no-server \
+                 --initialize-at-build-time=org.eclipse.jetty.util.thread.TryExecutor \
+                 -H:+ReportExceptionStackTraces \
+                 -jar /app/application.jar
+ENTRYPOINT ["/application"]
+##############
+
+##################
 #Run application in different container
 #FROM scratch
 #EXPOSE 4567

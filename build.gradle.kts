@@ -19,8 +19,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.sparkjava", "spark-core","2.5.4")
-    implementation("org.slf4j", "slf4j-simple", "1.7.13")
+    implementation("com.sparkjava", "spark-core","2.8.0")
+    implementation("org.slf4j", "slf4j-simple", "1.7.25")
     implementation(kotlin("stdlib-jdk8"))
     testCompile("junit", "junit", "4.12")
 }
