@@ -2,6 +2,8 @@
 
 NOTE : This project actually generate a "fallback" native image, not a "true" native image.
 
+Reference : https://github.com/oracle/graal/issues/1350
+
 ## Description
 
 Simple "Hello World" POC with :
@@ -11,23 +13,18 @@ Simple "Hello World" POC with :
 - Gradle with Kotlin-dsl
 - Docker with GraalVM (https://hub.docker.com/r/oracle/graalvm-ce/) for generating native-image
 
-## How
+## How to
 
-Just run :
+In command line :
 
 ```
-./gradlew clean build  
-
-./gradlew docker
+docker build -t com.tetragramato/graal-spark-kotlin .
 ```
 
 And after :
 
 ```
-docker run
--p 4567:4567
---name graalvm-poc
-com.tetragramato/graalvm-spark-kotlin:latest 
+docker run -p 4567:4567 --name graalvm-poc com.tetragramato/graal-spark-kotlin:latest 
 ```
 
 Finally on your navigator :
@@ -36,8 +33,4 @@ Finally on your navigator :
 http://localhost:4567/hello
 ```
 
-Et voilà !!! You run a GraalVM native-image, with a simple service responding "Hello World".
-
-## TODO
-
-The native-image is running in the same Docker container than GraalVM -> Need to run the native-image on another "clean" Docker Container.
+Et voilà ! You run a GraalVM Application, with a simple service responding "Hello World".

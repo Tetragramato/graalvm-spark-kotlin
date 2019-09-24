@@ -1,13 +1,11 @@
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.palantir.gradle.docker.DockerExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
     kotlin("jvm") version "1.3.31"
     id("com.github.johnrengelman.shadow") version "5.0.0"
-    id("com.palantir.docker") version "0.22.1"
 }
 
 group = "com.tetragramato"
@@ -19,7 +17,14 @@ repositories {
 }
 
 dependencies {
-    implementation("com.sparkjava", "spark-core","2.8.0")
+    implementation("com.sparkjava", "spark-core","2.8.0"){
+        exclude("org.eclipse.jetty")
+        exclude("org.eclipse.jetty.websocket")
+    }
+    implementation("org.eclipse.jetty", "jetty-server","9.4.19.v20190610")
+    implementation("org.eclipse.jetty", "jetty-webapp","9.4.19.v20190610")
+    implementation("org.eclipse.jetty.websocket", "websocket-server","9.4.19.v20190610")
+    implementation("org.eclipse.jetty.websocket", "websocket-servlet","9.4.19.v20190610")
     implementation("org.slf4j", "slf4j-simple", "1.7.25")
     implementation(kotlin("stdlib-jdk8"))
     testCompile("junit", "junit", "4.12")
@@ -35,17 +40,6 @@ tasks.withType<KotlinCompile> {
 val build: DefaultTask by tasks
 val shadowJar = tasks["shadowJar"] as ShadowJar
 build.dependsOn(shadowJar)
-
-configure<DockerExtension> {
-    name = "${project.group}/${rootProject.name}"
-    files(shadowJar.outputs)
-    buildArgs(mapOf(
-        "PORT"   to  "4567",
-        "NAME_APP" to "${rootProject.name}-${rootProject.version}-all.jar"
-    ))
-    pull(true)
-    dependsOn(shadowJar, tasks["jar"])
-}
 
 tasks.withType<ShadowJar> {
     mergeServiceFiles()
